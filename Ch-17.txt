@@ -1,0 +1,50 @@
+a. Aggregate Method:-
+   ----------------
+When inserting 'n' elements:
+
+-> Initially, the table starts with a capacity of 1.
+-> Each time it runs out of space, it doubles in size (2^k).
+-> For example, after the first insertion, it doubles to size 2, after the second insertion it doubles to size 4, and so on.
+-> In general, after 'k' doubles, the size is 2^k.
+-> Pseudo Code:
+    
+    Initialize table with capacity = 1
+    For i = 1 to n:
+        Create new table with size 2 * current size and copy elements from old table to new 		table.
+        Update table reference to new table.
+    
+    Insert element into table.
+-> The total cost is O(n) * k = O(nlogn).
+-> The amortized cost per insertion is O(log n).
+-> The runtime per insertion is O(logn).
+-> The total time complexity is O(nlog(n+1)).
+------------------------------------------------------------------------------------------------
+b. Accounting Method:-
+   -----------------
+- Change 2 units for each insertion.
+- When the table doubles in size from 'm' to '2m', credit 'm' units.
+- The credit exactly pays for the copy cost of O(m).
+- Pseudo Code:
+
+    Initialize table with capacity = 1
+    For i = 1 to n:
+        Create new table with size 2 * current size and copy elements from old table to new 		table.
+        Update table reference to new table.
+        Insert element 'i' into table.
+    
+    Initialize charges = 0
+    Initialize credits = 0
+
+    For i = 1 to n:
+        Charges += 2
+        If table doubles in size from 'm' to '2m':
+            Credits += m
+    
+    Total charges = 2 * n = O(n)
+    Total credits = m + 2m + ... + n/2 * m = O(n)
+    
+    ->Amortized cost per insertion = Total charges / n = O(n) / n = O(1)
+    
+    ->Run time per insertion = O(1)
+    
+    ->Total time = O(n)
